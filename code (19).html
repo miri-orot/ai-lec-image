@@ -1,0 +1,1237 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>건설업 AI 활용 교육 - AI 지원군 소개 (최종 수정본)</title>
+    <style>
+        :root {
+            --primary-color: #3155e2;
+            --secondary-color: #e0e7ff;
+            --dark-text: #212529; 
+            --light-text: #495057; 
+            --background: #f8f9fa;
+            --card-bg: #ffffff; 
+            --border-color: #dee2e6; 
+            --accent-color-visible: #c92a2a; 
+            --success-color: #2f9e44; 
+            --info-color: #1971c2;    
+            --warning-color: #f08c00; 
+            --warning-text-color: #a95c00;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Pretendard', 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
+        }
+
+        body::before { 
+            content: "";
+            position: fixed; 
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://github.com/miri-orot/ai-lec-image/blob/main/Image_fx%20(30).jpg?raw=true');
+            background-size: cover;   
+            background-position: center; 
+            background-repeat: no-repeat;
+            opacity: 0.1; 
+            z-index: -1; 
+        }
+        
+        body {
+            background-color: transparent;
+            color: var(--dark-text);
+            line-height: 1.7;
+            padding: 0;
+            margin: 0;
+            overflow-x: hidden;
+        }
+        
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background-color: rgba(255, 255, 255, 0.97);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+        }
+        
+        .logo {
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: var(--dark-text);
+        }
+        
+        .progress-container {
+            width: 200px;
+            height: 8px;
+            background: #e9ecef;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background: var(--primary-color);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+        
+        .slide-container {
+            max-width: 1200px;
+            margin: 100px auto 50px;
+            padding: 0 20px;
+        }
+        
+        .slide {
+            background-color: var(--card-bg);
+            border-radius: 16px;
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.09);
+            margin-bottom: 60px;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+            overflow: hidden;
+        }
+        
+        .slide.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .slide-header {
+            padding: 2.5rem 3rem 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+        
+        .slide-number {
+            color: var(--light-text);
+            font-size: 0.9rem;
+            font-weight: 500;
+            background-color: var(--secondary-color);
+            padding: 0.3rem 0.6rem;
+            border-radius: 4px;
+        }
+        
+        .slide-title {
+            font-size: 2.3rem;
+            font-weight: 700;
+            color: #1c3faa;
+            margin-bottom: 0.5rem;
+        }
+        
+        .slide-subtitle {
+            font-size: 1.25rem;
+            color: var(--light-text);
+            margin-bottom: 1rem;
+        }
+        
+        .slide-content {
+            padding: 3rem;
+        }
+        
+        .text-block {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+            color: var(--dark-text);
+            word-break: keep-all;
+        }
+        
+        .highlight {
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+        .highlight-accent {
+            color: var(--accent-color-visible);
+            font-weight: 600;
+        }
+        
+        .tool-icon-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        .tool-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-right: 1rem;
+            flex-shrink: 0;
+        }
+        .tool-name-header {
+            font-size: 1.8rem;
+            font-weight: 600;
+        }
+        .tool-link {
+            font-size: 0.9rem;
+            margin-left: 1rem;
+            color: var(--info-color);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .tool-link:hover {
+            text-decoration: underline;
+        }
+
+        .tool-screenshot {
+            width: 100%;
+            max-width: 650px;
+            border-radius: 10px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+            margin: 2rem auto;
+            display: block;
+            border: 1px solid var(--border-color);
+        }
+
+        .info-card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        .info-card {
+            background-color: #fdfdff;
+            border: 1px solid var(--secondary-color);
+            border-radius: 10px;
+            padding: 1.8rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+        .info-card-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 1.2rem;
+            display: flex;
+            align-items: center;
+        }
+        .info-card-title-icon {
+            margin-right: 0.8rem;
+            font-size: 1.5rem;
+            color: var(--primary-color);
+        }
+        .info-card ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        .info-card li {
+            margin-bottom: 0.8rem;
+            padding-left: 2rem;
+            position: relative;
+            font-size: 1.05rem;
+            line-height: 1.65;
+        }
+        .info-card li::before {
+            content: "✓"; 
+            color: var(--success-color);
+            position: absolute;
+            left: 0;
+            top: 3px;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .pricing-section {
+            margin-top: 2rem;
+        }
+        .pricing-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--dark-text);
+            margin-bottom: 1.5rem;
+            border-bottom: 3px solid var(--primary-color);
+            padding-bottom: 0.6rem;
+            display: inline-block;
+        }
+        .pricing-card {
+            background-color: white;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 1.8rem;
+            margin-bottom: 1.5rem;
+        }
+        .pricing-card-header {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 0.7rem;
+        }
+        .pricing-card-price {
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: var(--accent-color-visible);
+            display: block;
+            margin-bottom: 1rem;
+        }
+        .pricing-card-features {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        .pricing-card-features li {
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+            color: var(--dark-text);
+            padding-left: 1.8rem;
+            position: relative;
+        }
+        .pricing-card-features li::before {
+            content: "›";
+            color: var(--primary-color);
+            margin-right: 0.5rem;
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+            top: 1px;
+            font-size: 1.1rem;
+        }
+        
+        .advantages-disadvantages-section {
+            margin-top: 2.5rem;
+            display: grid;
+            grid-template-columns: 1fr; 
+            gap: 2rem;
+        }
+
+        @media (min-width: 992px) { 
+            .advantages-disadvantages-section {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .advdis-card {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.07);
+            border-top: 4px solid; 
+        }
+        .pros-box { border-top-color: var(--success-color); }
+        .cons-box { border-top-color: var(--warning-color); }
+
+
+        .advdis-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .advdis-title-icon {
+            font-size: 1.8rem; 
+            margin-right: 0.8rem;
+        }
+
+        .pros-title { color: var(--success-color); }
+        .cons-title { color: var(--warning-color); } 
+
+        .advdis-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .advdis-list-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+            font-size: 1.05rem;
+            line-height: 1.7;
+            color: var(--dark-text);
+        }
+
+        .advdis-list-item-icon {
+            font-size: 1.2rem;
+            margin-right: 0.8rem;
+            padding-top: 0.1em; 
+            flex-shrink: 0;
+        }
+
+        .pros-item-icon { color: var(--success-color); }
+        .cons-item-icon { color: var(--warning-color); }
+
+
+        .comparison-table-container { 
+            width: 100%;
+            overflow-x: auto;
+            margin: 2.5rem 0;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+        
+        table.comparison-table {
+            width: 100%;
+            min-width: 800px;
+            border-collapse: collapse;
+            font-size: 0.95rem;
+        }
+        
+        table.comparison-table th, table.comparison-table td {
+            padding: 1rem 0.8rem;
+            text-align: left;
+            border: 1px solid var(--border-color);
+            vertical-align: top;
+        }
+        
+        table.comparison-table th {
+            background-color: var(--secondary-color);
+            font-weight: 600;
+            color: var(--primary-color);
+            white-space: nowrap;
+        }
+
+        table.comparison-table td ul {
+            margin: 0;
+            padding-left: 1rem;
+        }
+        table.comparison-table td li {
+            margin-bottom: 0.2rem;
+            font-size: 0.9rem;
+        }
+        
+        .note-box {
+            background-color: #fff3cd; 
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-left: 5px solid var(--warning-color);
+            color: #664d03; 
+        }
+        
+        .note-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+            color: #664d03; 
+            display: flex;
+            align-items: center;
+        }
+        .note-title-icon {
+             margin-right: 0.5rem;
+             font-size: 1.2rem;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 2rem;
+            color: var(--light-text);
+            font-size: 0.9rem;
+            border-top: 1px solid var(--border-color);
+            margin-top: 2rem;
+        }
+
+        .section-divider {
+            border-top: 1px solid #ced4da; 
+            margin: 3rem 0; 
+        }
+
+        .emphasis-block {
+            background-color: var(--secondary-color);
+            padding: 1.8rem; 
+            border-radius: 10px; 
+            margin: 2.5rem 0; 
+            text-align: center;
+            font-size: 1.2rem; 
+            color: var(--primary-color);
+            font-weight: 500;
+            border: 1px solid var(--primary-color); 
+        }
+
+
+        @media (max-width: 768px) {
+            .slide-title {
+                font-size: 1.8rem;
+            }
+            .slide-subtitle {
+                font-size: 1rem;
+            }
+            .info-card-grid {
+                grid-template-columns: 1fr;
+            }
+            .slide-header, .slide-content {
+                padding: 1.5rem;
+            }
+            .tool-name-header {
+                font-size: 1.5rem;
+            }
+            table.comparison-table {
+                display: block;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="logo">OROT</div>
+        <div class="progress-container">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
+    </div>
+    
+    <div class="slide-container">
+        <!-- 슬라이드 1: 인트로 - Module 1의 AI 지원군 소개 시작 -->
+        <div class="slide active" id="intro-slide">
+            <div class="slide-header">
+                <div>
+                    <div class="slide-title">Module 1: 왜 AI인가? 건설업무 혁신의 시작</div>
+                    <div class="slide-subtitle">4. 오늘의 AI 지원군 소개: 건설 업무를 도와줄 똑똑한 도구들!</div>
+                </div>
+                <div class="slide-number">M1-S4</div>
+            </div>
+            <div class="slide-content">
+                <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 1rem 0 2rem 0;">
+                    <div style="width: 90%; max-width: 800px; padding: 2rem; text-align: center; background-color: var(--secondary-color); border-radius: 12px; margin-bottom: 2rem;">
+                        <h2 style="color: var(--primary-color); font-size: 1.8rem; margin-bottom: 1rem;">건설업 AI 활용 교육 시리즈</h2>
+                        <p style="font-size: 1.1rem; margin-bottom: 0.5rem; font-weight: 600; color: var(--primary-color);">Module 1: 왜 AI인가? 건설업무 혁신의 시작</p>
+                        <p style="font-size: 1.1rem; margin-bottom: 0.5rem; color: var(--light-text);">Module 2: AI와 제대로 소통하기: 핵심 도구 & 프롬프트</p>
+                        <p style="font-size: 1.1rem; margin-bottom: 0.5rem; color: var(--light-text);">Module 3: 실전! AI로 건설 업무 효율 UP!</p>
+                        <p style="font-size: 1.1rem; color: var(--light-text);">Module 4: 똑똑하고 안전한 AI 활용 & 마무리</p>
+                    </div>
+                </div>
+
+                <div class="text-block" style="text-align: center;">
+                    건설 사무 현장의 <span class="highlight-accent">문제점(Pain Points)</span>과 <span class="highlight">생성형 AI의 혁신 가능성</span>을 살펴보았습니다. <br>
+                    이제, 여러분의 업무 효율을 극대화할 <span class="highlight">핵심 AI 지원군</span>들을 소개합니다. <br>
+                    ChatGPT부터 NotebookLM까지, 6가지 도구의 특징, 요금제, <br>그리고 <span class="highlight">건설 사무 업무 적용 방안</span>을 심층 분석합니다.
+                </div>
+                <div class="emphasis-block">
+                    각 AI 도구는 특정 작업에 최적화된 강력한 도구입니다. 지금부터 자세히 알아보겠습니다!
+                </div>
+            </div>
+        </div>
+
+        <!-- ChatGPT 슬라이드 -->
+        <div class="slide" id="chatgpt-intro-slide">
+            <div class="slide-header">
+                <div>
+                    <div class="slide-title">ChatGPT: 만능 해결사 & 글쓰기 파트너</div>
+                    <div class="slide-subtitle">가장 널리 알려진 대화형 AI, 글쓰기의 마법사</div>
+                </div>
+                <div class="slide-number">AI 도구 01</div>
+            </div>
+            <div class="slide-content">
+                <div class="tool-icon-header">
+                    <div class="tool-icon" style="background-color: #74AA9C;">💬</div>
+                    <div class="tool-name-header" style="color: #74AA9C;">ChatGPT (OpenAI)</div>
+                    <a href="https://chat.openai.com/" target="_blank" class="tool-link">공식 사이트 방문</a>
+                </div>
+                <img src="https://github.com/miri-orot/ai-lec-image/blob/main/CleanShot%202025-05-11%20at%2015.42.16@2x.png?raw=true" alt="ChatGPT 스크린샷" class="tool-screenshot">
+                <div class="text-block" style="text-align: center;">
+                    ChatGPT는 <span class="highlight">뛰어난 글쓰기 및 대화 능력</span>으로<br>다양한 사무 업무를 지원하는 세계에서 가장 유명한 AI입니다.<br>
+                    <small><i>(주요 모델: GPT-3.5, GPT-4, GPT-4o, o1 Pro 등)</i></small>
+                </div>
+                <div class="info-card-grid">
+                    <div class="info-card">
+                        <div class="info-card-title"><span class="info-card-title-icon">📄</span>건설 문서 작업 지원</div>
+                        <ul>
+                            <li>보고서, 제안서, 공문, 이메일 등 초안 신속 생성</li>
+                            <li>기술 문서, 회의록 핵심 내용 요약 및 정리</li>
+                        </ul>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-card-title"><span class="info-card-title-icon">💡</span>아이디어 발상 및 기획</div>
+                        <ul>
+                            <li>신규 프로젝트, 공법 개선 등 창의적 아이디어 도출</li>
+                            <li>기획안 목차 구성 및 기본 전략 수립 지원</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="slide" id="chatgpt-pricing-slide">
+             <div class="slide-header">
+                <div>
+                    <div class="slide-title">ChatGPT: 요금제 및 활용 전략</div>
+                    <div class="slide-subtitle">무료부터 전문가용까지, 나에게 맞는 플랜은?</div>
+                </div>
+                <div class="slide-number">AI 도구 02</div>
+            </div>
+            <div class="slide-content">
+                <div class="pricing-section">
+                    <div class="pricing-title">주요 요금 플랜</div>
+                    <div class="info-card-grid">
+                        <div class="pricing-card">
+                            <div class="pricing-card-header">무료 플랜 (Free)</div>
+                            <ul class="pricing-card-features">
+                                <li>GPT-3.5 모델 (GPT-4o 제한적 사용 가능성)</li>
+                                <li>기본 질의응답, 텍스트/코드 생성</li>
+                                <li style="color: var(--warning-text-color);"><span class="highlight-accent">제한:</span> 고급 기능 미지원, 속도 저하</li>
+                            </ul>
+                        </div>
+                        <div class="pricing-card">
+                            <div class="pricing-card-header">Plus 플랜</div>
+                            <div class="pricing-card-price">월 $20</div>
+                            <ul class="pricing-card-features">
+                                <li>고급 모델(GPT-4/4o) 우선 사용</li>
+                                <li>DALL-E 이미지 생성, 웹 브라우징, 데이터 분석</li>
+                            </ul>
+                        </div>
+                         <div class="pricing-card">
+                            <div class="pricing-card-header">Team 플랜</div>
+                            <div class="pricing-card-price">사용자당 월 $25~$30</div>
+                            <ul class="pricing-card-features">
+                                <li>Plus 기능 + 협업 기능 (작업 공간, 관리)</li>
+                            </ul>
+                        </div>
+                    </div>
+                     <small><i>* Pro 플랜(월 $200)은 최고 성능의 전문가용입니다.</i></small>
+                </div>
+                <div class="section-divider"></div>
+                <div class="advantages-disadvantages-section">
+                    <div class="advdis-card pros-box">
+                        <h3 class="advdis-title pros-title"><span class="advdis-title-icon">👍</span>ChatGPT의 강점</h3>
+                        <ul class="advdis-list">
+                            <li class="advdis-list-item"><span class="advdis-list-item-icon pros-item-icon">✨</span>뛰어난 자연어 처리 및 글쓰기 품질</li>
+                            <li class="advdis-list-item"><span class="advdis-list-item-icon pros-item-icon">📚</span>방대한 학습 데이터로 넓은 지식 범위</li>
+                            <li class="advdis-list-item"><span class="advdis-list-item-icon pros-item-icon">🧩</span>다양한 플러그인과 GPTs 통한 확장성</li>
+                            <li class="advdis-list-item"><span class="advdis-list-item-icon pros-item-icon">💻</span>사용자 친화적인 인터페이스</li>
+                        </ul>
+                    </div>
+                    <div class="advdis-card cons-box">
+                        <h3 class="advdis-title cons-title"><span class="advdis-title-icon">🤔</span>사용 시 고려사항</h3>
+                        <ul class="advdis-list">
+                            <li class="advdis-list-item"><span class="advdis-list-item-icon cons-item-icon">⚠️</span>무료 버전은 기능 및 최신 정보 접근 한계</li>
+                            <li class="advdis-list-item"><span class="advdis-list-item-icon cons-item-icon">🧐</span>답변 정확성 비판적 검토 필수 (환각 현상)</li>
+                            <li class="advdis-list-item"><span class="advdis-list-item-icon cons-item-icon">🔒</span>민감 정보 입력 시 개인정보보호 설정 확인</li>
+                            <li class="advdis-list-item"><span class="advdis-list-item-icon cons-item-icon">⏳</span>유료 플랜도 사용량 제한 가능성</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Claude -->
+        <div class="slide" id="claude-intro-slide">
+            <div class="slide-header">
+                <div>
+                    <div class="slide-title">Claude: 긴 문서 처리와 섬세한 글쓰기</div>
+                    <div class="slide-subtitle">대용량 정보 분석 및 논리적 글쓰기 전문가</div>
+                </div>
+                <div class="slide-number">AI 도구 03</div>
+            </div>
+            <div class="slide-content">
+                <div class="tool-icon-header">
+                    <div class="tool-icon" style="background-color: #D97757;">📖</div>
+                    <div class="tool-name-header" style="color: #D97757;">Claude (Anthropic)</div>
+                    <a href="https://claude.ai/" target="_blank" class="tool-link">공식 사이트 방문</a>
+                </div>
+                <img src="https://github.com/miri-orot/ai-lec-image/blob/main/CleanShot%202025-05-11%20at%2015.46.46.png?raw=true" alt="Claude 스크린샷" class="tool-screenshot">
+                <div class="text-block" style="text-align: center;">
+                    Anthropic의 Claude는 <span class="highlight">매우 긴 문서(수십만 단어)를 한 번에 처리</span>하는 능력과<br>답변의 <span class="highlight">안전성 및 윤리성</span>을 중시하는 AI입니다.<br>복잡한 내용을 논리적으로 요약하거나 섬세한 글쓰기에 강합니다.
+                </div>
+                <div class="info-card-grid">
+                    <div class="info-card">
+                        <div class="info-card-title"><span class="info-card-title-icon">📚</span>건설 대용량 문서 처리</div>
+                        <ul>
+                            <li>계약서, 시방서, 법규 등 방대한 자료 신속 분석/요약</li>
+                            <li>여러 기술 보고서 종합 비교 (긴 컨텍스트 활용)</li>
+                        </ul>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-card-title"><span class="info-card-title-icon">✍️</span>전문적 글쓰기 지원</div>
+                        <ul>
+                            <li>보고서/제안서 문장 표현 교정 및 논리 강화</li>
+                            <li>긴 회의록 상세 요약 및 Action Item 체계적 정리</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="slide" id="claude-pricing-slide">
+            <div class="slide-header">
+                <div>
+                    <div class="slide-title">Claude: 요금제 및 활용 전략</div>
+                    <div class="slide-subtitle">긴 글 분석과 안전한 소통을 위한 선택</div>
+                </div>
+                <div class="slide-number">AI 도구 04</div>
+            </div>
+            <div class="slide-content">
+                 <div class="pricing-section">
+                    <div class="pricing-title">주요 요금 플랜</div>
+                    <div class="info-card-grid">
+                        <div class="pricing-card">
+                            <div class="pricing-card-header">무료 플랜 (Free)</div>
+                            <ul class="pricing-card-features">
+                                <li>Claude Sonnet 등 기본 모델 사용</li>
+                                <li>기본 질의응답, 파일 분석(제한적)</li>
+                                <li style="color: var(--warning-text-color);"><span class="highlight-accent">제한:</span> 메시지 사용량 제한 큼 (일/시간)</li>
+                            </ul>
+                        </div>
+                        <div class="pricing-card">
+                            <div class="pricing-card-header">Pro 플랜</div>
+                            <div class="pricing-card-price">월 $20</div>
+                            <ul class="pricing-card-features">
+                                <li>무료 대비 약 5배 사용량, 고급 모델(Opus 등)</li>
+                                <li>최대 200K 토큰 컨텍스트, Projects 기능</li>
+                            </ul>
+                        </div>
+                         <div class="pricing-card">
+                            <div class="pricing-card-header">Team 플랜</div>
+                            <div class="pricing-card-price">사용자당 월 $25~$30</div>
+                            <ul class="pricing-card-features">
+                                <li>Pro 기능 + 높은 사용량, 협업 기능</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <small><i>* Max 플랜(월 $100/$200)은 최고 성능/대용량 전문가용입니다.</i></small>
+                </div>
+                <div class="section-divider"></div>
+                <div class="advantages-disadvantages-section">
+                    <div class="advdis-card pros-box">
+                        <h3 class="advdis-title pros-title"><span class="advdis-title-icon">👍</span>Claude의 강점</h3>
+                        <ul class="advdis-list">
+                            <li class="advdis-list-item"><span class="advdis-list-item-icon pros-item-icon">✨</span>업계 최고 수준의 긴 컨텍스트 처리</li>
+                            <li class="advdis-list-item"><span class="advdis-list-item-icon pros-item-icon">🛡️</span>안전하고 윤리적인 답변 생성 경향</li>
+                            <li class="advdis-list-item"><span class="advdis-list-item-icon pros-item-icon">✍️</span>논리적이고 섬세한 글쓰기 지원</li>
+                            <li class="advdis-list-item"><span class="advdis-list-item-icon pros-item-icon">🔒</span>사용자 데이터 비훈련 (프라이버시 중시)</li>
+                        </ul>
+                    </div>
+                    <div class="advdis-card cons-box">
+                        <h3 class="advdis-title cons-title"><span class="advdis-title-icon">🤔</span>사용 시 고려사항</h3>
+                        <ul class="advdis-list">
+                            <li class="advdis-list-item"><span class="advdis-list-item-icon cons-item-icon">⚠️</span>무료 버전 사용량 제한 매우 큼</li>
+                            <li class="advdis-list-item"><span class="advdis-list-item-icon cons-item-icon">🖼️</span>이미지 생성 기능 미흡</li>
+                            <li class="advdis-list-item"><span class="advdis-list-item-icon cons-item-icon">🔌</span>플러그인 등 외부 확장성 부족</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Gemini -->
+        <div class="slide" id="gemini-intro-slide">
+            <div class="slide-header">
+                <div>
+                    <div class="slide-title">Gemini: 구글의 스마트 브레인</div>
+                    <div class="slide-subtitle">최신 정보 탐색과 Google Workspace 통합의 강자</div>
+                </div>
+                <div class="slide-number">AI 도구 05</div>
+            </div>
+            <div class="slide-content">
+                <div class="tool-icon-header">
+                    <div class="tool-icon" style="background-color: #4285F4;">🌍</div>
+                    <div class="tool-name-header" style="color: #4285F4;">Gemini (Google)</div>
+                    <a href="https://gemini.google.com/" target="_blank" class="tool-link">공식 사이트 방문</a>
+                </div>
+                <img src="https://github.com/miri-orot/ai-lec-image/blob/main/CleanShot%202025-05-11%20at%2015.44.46@2x.png?raw=true" alt="Gemini 스크린샷" class="tool-screenshot">
+                <div class="text-block" style="text-align: center;">
+                    구글의 Gemini는 <span class="highlight">강력한 최신 정보 검색</span>과 이미지, 코드 등<br><span class="highlight">다양한 정보를 처리하는 멀티모달 기능</span>이 특징입니다.<br>Google Workspace와의 뛰어난 연동성을 제공합니다.
+                </div>
+                <div class="info-card-grid">
+                    <div class="info-card">
+                        <div class="info-card-title"><span class="info-card-title-icon">🌐</span>건설 최신 정보 & 검색</div>
+                        <ul>
+                            <li>실시간 건설 기술 동향 및 시장 분석</li>
+                            <li>개정 법규 및 정책 변화 즉시 파악</li>
+                            <li>정확한 단계별 정보 검색 가이드 제공</li>
+                        </ul>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-card-title"><span class="info-card-title-icon">🔗</span>Google 생태계 연동</div>
+                        <ul>
+                            <li>드라이브 문서 분석, Gmail/Docs AI 기능(유료)</li>
+                            <li>워크스페이스 통한 업무 흐름 간소화</li>
+                            <li>현장 사진/영상 분석, 코드 이해 지원</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="slide" id="gemini-pricing-slide">
+            <div class="slide-header">
+                <div>
+                    <div class="slide-title">Gemini: 요금제 및 활용 전략</div>
+                    <div class="slide-subtitle">구글 기반의 강력한 AI 경험하기</div>
+                </div>
+                <div class="slide-number">AI 도구 06</div>
+            </div>
+            <div class="slide-content">
+                <div class="pricing-section">
+                    <div class="pricing-title">주요 요금 플랜</div>
+                    <div class="info-card-grid">
+                        <div class="pricing-card">
+                            <div class="pricing-card-header">무료 플랜</div>
+                            <ul class="pricing-card-features">
+                                <li>Gemini 1.5 Flash 등 기본 모델</li>
+                                <li>일상적 질의응답, 간단한 텍스트/코드</li>
+                                <li style="color: var(--warning-text-color);"><span class="highlight-accent">제한:</span> 고급 모델/기능 사용 불가</li>
+                            </ul>
+                        </div>
+                        <div class="pricing-card">
+                            <div class="pricing-card-header">Gemini Advanced</div>
+                            <div class="pricing-card-price">월 $19.99 (Google One AI Premium)</div>
+                            <ul class="pricing-card-features">
+                                <li>최신 Pro 모델(1.5 Pro, 2.5 Pro)</li>
+                                <li>Google Workspace 통합 심화, 2TB 저장 공간</li>
+                            </ul>
+                        </div>
+                        <div class="pricing-card">
+                            <div class="pricing-card-header">비즈니스/엔터프라이즈</div>
+                            <div class="pricing-card-price">사용자당 월 $20~$30</div>
+                            <ul class="pricing-card-features">
+                                <li>기업 환경 최적화, 보안 및 관리 강화</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="section-divider"></div>
+                <div class="advantages-disadvantages-section">
+                    <div class="advdis-card pros-box">
+                        <h3 class="advdis-title pros-title"><span class="advdis-title-icon">👍</span>Gemini의 강점</h3>
+                        <ul class="advdis-list">
+                            <li class="advdis-list-item"><span class="advdis-list-item-icon pros-item-icon">✨</span>강력한 최신 정보 접근성 (구글 검색)</li>
+                            <li class="advdis-list-item"><span class="advdis-list-item-icon pros-item-icon">🖼️</span>뛰어난 멀티모달(이미지, 코드) 처리</li>
+                            <li class="advdis-list-item"><span class="advdis-list-item-icon pros-item-icon">🔗</span>Google Workspace와 완벽 통합</li>
+                            <li class="advdis-list-item"><span class="advdis-list-item-icon pros-item-icon">🚀</span>최신 고성능 모델의 빠른 적용</li>
+                        </ul>
+                    </div>
+                    <div class="advdis-card cons-box">
+                        <h3 class="advdis-title cons-title"><span class="advdis-title-icon">🤔</span>사용 시 고려사항</h3>
+                        <ul class="advdis-list">
+                            <li class="advdis-list-item"><span class="advdis-list-item-icon cons-item-icon">⚠️</span>무료 버전 기능 제한이 큰 편</li>
+                            <li class="advdis-list-item"><span class="advdis-list-item-icon cons-item-icon">⚙️</span>API 활용은 별도 과금 체계</li>
+                            <li class="advdis-list-item"><span class="advdis-list-item-icon cons-item-icon">🌐</span>일부 고급 기능은 영어 최적화 가능성</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Genspark -->
+        <div class="slide" id="genspark-intro-slide">
+            <div class="slide-header">
+                <div>
+                    <div class="slide-title">Genspark: AI 리서치 팀 & 시각화 전문가</div>
+                    <div class="slide-subtitle">심층 분석 보고서(Sparkpage) 생성 및 아이디어 시각화</div>
+                </div>
+                <div class="slide-number">AI 도구 07</div>
+            </div>
+            <div class="slide-content">
+                <div class="tool-icon-header">
+                    <div class="tool-icon" style="background-color: #8E44AD;">✨</div>
+                    <div class="tool-name-header" style="color: #8E44AD;">Genspark</div>
+                    <a href="https://www.genspark.com/" target="_blank" class="tool-link">공식 사이트 방문</a>
+                </div>
+                <img src="https://github.com/miri-orot/ai-lec-image/blob/main/CleanShot%202025-05-11%20at%2015.43.29@2x.png?raw=true" alt="Genspark 스크린샷" class="tool-screenshot">
+                <div class="text-block" style="text-align: center;">
+                    Genspark는 여러 AI 에이전트가 협력하여 특정 주제를 심층 조사하고,<br>그 결과를 <span class="highlight">‘Sparkpage’라는 체계적인 보고서 형태로 제공</span>합니다.<br>정보 분석, 구조화 및 <span class="highlight">PPT 등 멀티미디어 생성</span>을 통한 아이디어 시각화에 강합니다.
+                </div>
+                <div class="info-card-grid">
+                    <div class="info-card">
+                        <div class="info-card-title"><span class="info-card-title-icon">📊</span>건설 심층 리서치 & 보고서</div>
+                        <ul>
+                            <li>신규 공법/자재 시장 동향 등 종합 보고서 자동 생성</li>
+                            <li>경쟁사 분석 및 기술 경제성 분석 지원</li>
+                        </ul>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-card-title"><span class="info-card-title-icon">🖼️</span>아이디어 시각화 및 자료화</div>
+                        <ul>
+                            <li>조사 내용 기반 PPT 슬라이드 초안 생성</li>
+                            <li>이미지/영상 요약 등 멀티미디어 콘텐츠 제작</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="slide" id="genspark-pricing-slide">
+            <div class="slide-header">
+                <div>
+                    <div class="slide-title">Genspark: 요금제 및 활용 전략</div>
+                    <div class="slide-subtitle">리서치 자동화와 시각적 결과물 도출</div>
+                </div>
+                <div class="slide-number">AI 도구 08</div>
+            </div>
+            <div class="slide-content">
+                <div class="pricing-section">
+                    <div class="pricing-title">주요 요금 플랜</div>
+                    <div class="info-card-grid">
+                        <div class="pricing-card">
+                            <div class="pricing-card-header">무료 플랜</div>
+                            <ul class="pricing-card-features">
+                                <li>일일 200 크레딧 내 기본 AI 에이전트 검색</li>
+                                <li>기본 Sparkpage, 슬라이드/이미지/영상 생성</li>
+                                <li style="color: var(--warning-text-color);"><span class="highlight-accent">제한:</span> 크레딧 소진 시 사용 제한, 고급 기능 불가</li>
+                            </ul>
+                        </div>
+                        <div class="pricing-card">
+                            <div class="pricing-card-header">Plus 플랜</div>
+                            <div class="pricing-card-price">월 $24.99</div>
+                            <ul class="pricing-card-features">
+                                <li>무료 대비 5배 사용량, 고급 AI 에이전트/모델</li>
+                                <li>고품질/무제한 Sparkpage 및 멀티미디어 생성</li>
+                            </ul>
+                        </div>
+                         <div class="pricing-card">
+                            <div class="pricing-card-header">Enterprise 플랜</div>
+                            <div class="pricing-card-price">맞춤형</div>
+                            <ul class="pricing-card-features">
+                                <li>대규모 팀용 중앙 관리, 전용 지원, 맞춤 통합</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="section-divider"></div>
+                <div class="advantages-disadvantages-section">
+                    <div class="advdis-card pros-box">
+                        <h3 class="advdis-title pros-title"><span class="advdis-title-icon">👍</span>Genspark의 강점</h3>
+                        <ul class="advdis-list">
+                            <li class="advdis-list-item"><span class="advdis-list-item-icon pros-item-icon">✨</span>AI 에이전트 기반 심층 리서치 자동화</li>
+                            <li class="advdis-list-item"><span class="advdis-list-item-icon pros-item-icon">📄</span>구조화된 보고서(Sparkpage) 자동 생성</li>
+                            <li class="advdis-list-item"><span class="advdis-list-item-icon pros-item-icon">🎬</span>멀티미디어 콘텐츠(PPT, 이미지) 생성</li>
+                            <li class="advdis-list-item"><span class="advdis-list-item-icon pros-item-icon">💡</span>아이디어 시각화 및 구체화에 유용</li>
+                        </ul>
+                    </div>
+                    <div class="advdis-card cons-box">
+                        <h3 class="advdis-title cons-title"><span class="advdis-title-icon">🤔</span>사용 시 고려사항</h3>
+                        <ul class="advdis-list">
+                            <li class="advdis-list-item"><span class="advdis-list-item-icon cons-item-icon">⚠️</span>무료 플랜 크레딧 제한으로 활용에 한계</li>
+                            <li class="advdis-list-item"><span class="advdis-list-item-icon cons-item-icon">🛠️</span>비교적 신생 서비스 (안정성/기능 변경 가능)</li>
+                            <li class="advdis-list-item"><span class="advdis-list-item-icon cons-item-icon">🌐</span>주로 영어 기반 (한국어 지원 미흡 가능)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Perplexity -->
+        <div class="slide" id="perplexity-intro-slide">
+            <div class="slide-header">
+                <div>
+                    <div class="slide-title">Perplexity: 출처 기반 검색의 강자</div>
+                    <div class="slide-subtitle">정보 신뢰성 확보와 팩트체킹에 최적화된 AI 검색 엔진</div>
+                </div>
+                <div class="slide-number">AI 도구 09</div>
+            </div>
+            <div class="slide-content">
+                <div class="tool-icon-header">
+                    <div class="tool-icon" style="background-color: #1E88E5;">🔎</div>
+                    <div class="tool-name-header" style="color: #1E88E5;">Perplexity</div>
+                    <a href="https://www.perplexity.ai/" target="_blank" class="tool-link">공식 사이트 방문</a>
+                </div>
+                <img src="https://github.com/miri-orot/ai-lec-image/blob/main/CleanShot%202025-05-11%20at%2015.48.03.png?raw=true" alt="Perplexity 스크린샷" class="tool-screenshot">
+                <div class="text-block" style="text-align: center;">
+                    Perplexity는 답변과 함께 <span class="highlight">정보의 출처(웹 링크, 인용)를 명확히 제공</span>하여<br>사용자가 직접 사실을 확인하고 신뢰성을 판단하도록 돕는 AI 검색 엔진입니다.<br>특히 <span class="highlight">건설 법규, 시방서 등 정확하고 최신 정보가 필수적인 분야</span>에 매우 유용합니다.
+                </div>
+                <div class="info-card-grid">
+                    <div class="info-card">
+                        <div class="info-card-title"><span class="info-card-title-icon">🔗</span>건설 출처 기반 정보</div>
+                        <ul>
+                            <li>최신 법규, 시방서, 표준계약서 등 공식 문서 검색</li>
+                            <li>답변의 모든 근거자료(웹 링크) 직접 확인</li>
+                        </ul>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-card-title"><span class="info-card-title-icon">✅</span>정확성 및 검증</div>
+                        <ul>
+                            <li>정보 교차 검증(Fact-Checking) 보조</li>
+                            <li>실시간 웹 검색으로 최신 정보 반영</li>
+                            <li>기술 동향 원본 자료 링크 확보</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="slide" id="perplexity-pricing-slide">
+            <div class="slide-header">
+                <div>
+                    <div class="slide-title">Perplexity: 요금제 및 활용 전략</div>
+                    <div class="slide-subtitle">신뢰할 수 있는 정보 탐색을 위한 선택</div>
+                </div>
+                <div class="slide-number">AI 도구 10</div>
+            </div>
+            <div class="slide-content">
+                <div class="pricing-section">
+                    <div class="pricing-title">주요 요금 플랜</div>
+                    <div class="info-card-grid">
+                        <div class="pricing-card">
+                            <div class="pricing-card-header">무료 플랜 (Standard)</div>
+                            <ul class="pricing-card-features">
+                                <li>무제한 기본 검색(Quick Search) 및 출처 제공</li>
+                                <li>Pro 검색(일 5회 체험)</li>
+                                <li style="color: var(--warning-text-color);"><span class="highlight-accent">제한:</span> 고급 기능 사용 불가</li>
+                            </ul>
+                        </div>
+                        <div class="pricing-card">
+                            <div class="pricing-card-header">Pro 플랜</div>
+                            <div class="pricing-card-price">월 $20 또는 연간 $200</div>
+                            <ul class="pricing-card-features">
+                                <li>Pro 검색 600회+ (심층 검색)</li>
+                                <li>다양한 고급 AI 모델(GPT-4.5 등) 선택</li>
+                                <li>파일 업로드/분석, 이미지 생성, API 크레딧</li>
+                            </ul>
+                        </div>
+                         <div class="pricing-card">
+                            <div class="pricing-card-header">Enterprise 플랜</div>
+                            <div class="pricing-card-price">사용자당 월 $40부터</div>
+                            <ul class="pricing-card-features">
+                                <li>Pro 기능 + 팀 지식 베이스, 데이터 비훈련 보장</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="section-divider"></div>
+                <div class="advantages-disadvantages-section">
+                    <div class="advdis-card pros-box">
+                        <h3 class="advdis-title pros-title"><span class="advdis-title-icon">👍</span>Perplexity의 강점</h3>
+                        <ul class="advdis-list">
+                            <li class="advdis-list-item"><span class="advdis-list-item-icon pros-item-icon">✨</span>명확한 출처(Citations) 제공으로 신뢰성 극대화</li>
+                            <li class="advdis-list-item"><span class="advdis-list-item-icon pros-item-icon">🌐</span>실시간 웹 검색 통한 최신 정보 반영</li>
+                            <li class="advdis-list-item"><span class="advdis-list-item-icon pros-item-icon">🤖</span>Pro에서 다양한 최신 AI 모델 선택 가능</li>
+                            <li class="advdis-list-item"><span class="advdis-list-item-icon pros-item-icon">💻</span>사용자 친화적인 인터페이스</li>
+                        </ul>
+                    </div>
+                    <div class="advdis-card cons-box">
+                        <h3 class="advdis-title cons-title"><span class="advdis-title-icon">🤔</span>사용 시 고려사항</h3>
+                        <ul class="advdis-list">
+                            <li class="advdis-list-item"><span class="advdis-list-item-icon cons-item-icon">⚠️</span>무료 플랜 고급 기능 제한 매우 큼</li>
+                            <li class="advdis-list-item"><span class="advdis-list-item-icon cons-item-icon">📝</span>창의적 글쓰기보다 정보 검색/사실 확인 특화</li>
+                            <li class="advdis-list-item"><span class="advdis-list-item-icon cons-item-icon">🇰🇷</span>한국어 검색 결과 깊이 부족 가능성</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- NotebookLM -->
+        <div class="slide" id="notebooklm-intro-slide">
+            <div class="slide-header">
+                <div>
+                    <div class="slide-title">NotebookLM: 내 손안의 문서를 가장 잘 아는 AI</div>
+                    <div class="slide-subtitle">개인 맞춤형 지식 베이스 구축 및 내부 자료 분석 전문가</div>
+                </div>
+                <div class="slide-number">AI 도구 11</div>
+            </div>
+            <div class="slide-content">
+                <div class="tool-icon-header">
+                    <div class="tool-icon" style="background-color: #34A853;">📓</div>
+                    <div class="tool-name-header" style="color: #34A853;">NotebookLM (Google)</div>
+                     <a href="https://notebooklm.google.com/" target="_blank" class="tool-link">공식 사이트 방문</a>
+                </div>
+                <img src="https://github.com/miri-orot/ai-lec-image/blob/main/CleanShot%202025-05-11%20at%2015.45.24@2x.png?raw=true" alt="NotebookLM 스크린샷" class="tool-screenshot">
+                <div class="text-block" style="text-align: center;">
+                    NotebookLM은 <span class="highlight">사용자가 직접 업로드한 문서(PDF, Google Docs 등)를 기반으로</span><br>질문에 답하고 정보를 요약하는 <span class="highlight">개인화된 지식 탐색 도구</span>입니다.<br>Plus 버전 출시로 기업 및 교육기관 사용자에게도 확장되었습니다.
+                </div>
+                <div class="info-card-grid">
+                    <div class="info-card">
+                        <div class="info-card-title"><span class="info-card-title-icon">📁</span>건설 내부 자료 기반 분석</div>
+                        <ul>
+                            <li>과거 프로젝트 보고서, 계약서 등 내부 문서 기반 신속 정보 검색</li>
+                            <li>기술 사양서, 설계도면 주석, 복잡한 계약서 내용 이해 및 분석</li>
+                        </ul>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-card-title"><span class="info-card-title-icon">🧠</span>개인/팀 지식 자산화</div>
+                        <ul>
+                            <li>사내 규정, 기술 매뉴얼 등 중요 문서 기반 지식 베이스 구축</li>
+                            <li>여러 참고 자료 종합 및 새로운 아이디어 도출 지원</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="slide" id="notebooklm-pricing-slide">
+            <div class="slide-header">
+                <div>
+                    <div class="slide-title">NotebookLM & NotebookLM Plus</div>
+                    <div class="slide-subtitle">무료 버전과 강화된 Plus 버전 비교</div>
+                </div>
+                <div class="slide-number">AI 도구 12</div>
+            </div>
+            <div class="slide-content">
+                <div class="pricing-section">
+                    <div class="pricing-title">NotebookLM vs NotebookLM Plus</div>
+                    <div class="info-card-grid">
+                        <div class="pricing-card">
+                            <div class="pricing-card-header">NotebookLM (무료)</div>
+                            <ul class="pricing-card-features">
+                                <li>개인 무료 사용 (구글 계정)</li>
+                                <li>노트북 100개, 노트북당 소스 50개 (각 50만 단어)</li>
+                                <li>일일 질문 50개, 오디오 생성 3개</li>
+                                <li>기본 요약, 질의응답, 출처 표시</li>
+                            </ul>
+                        </div>
+                        <div class="pricing-card">
+                            <div class="pricing-card-header">NotebookLM Plus</div>
+                            <div class="pricing-card-price">Workspace, Google One AI Premium, Google Cloud 통해 제공</div>
+                            <ul class="pricing-card-features">
+                                <li>NotebookLM 모든 기능 + <span class="highlight">5배 이상 사용량</span></li>
+                                <li>노트북 500개, 노트북당 소스 300개</li>
+                                <li>일일 질문 500개, 오디오 생성 20개</li>
+                                <li><span class="highlight">프리미엄:</span> '채팅 전용' 공유, 고급 채팅 설정, 노트북 분석</li>
+                                <li>엔터프라이즈급 데이터 보호 (경로별 상이)</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="text-block" style="font-size: 0.95rem; margin-top: 1rem;">
+                        <span class="highlight">NotebookLM Plus 사용 경로 및 데이터 보호:</span>
+                        <ul>
+                            <li><strong>Google Workspace/Education:</strong> Business Standard 이상, Gemini Education 부가기능 등. (데이터 모델 개선 미사용 및 인적 검토 없음)</li>
+                            <li><strong>Google One AI Premium:</strong> 개인 유료 구독. (의견 제공 시 검토자 검토 가능성)</li>
+                            <li><strong>Google Cloud (엔터프라이즈용):</strong> AgentSpace 요금제. (데이터 모델 개선 미사용 및 인적 검토 없음, GCP 프로젝트 내 파일 유지)</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="section-divider"></div>
+                 <div class="advantages-disadvantages-section">
+                    <div class="advdis-card pros-box">
+                        <h3 class="advdis-title pros-title"><span class="advdis-title-icon">👍</span>NotebookLM의 강점</h3>
+                        <ul class="advdis-list">
+                            <li class="advdis-list-item"><span class="advdis-list-item-icon pros-item-icon">✨</span>제공한 특정 문서(소스) 내용에만 집중</li>
+                            <li class="advdis-list-item"><span class="advdis-list-item-icon pros-item-icon">🎯</span>답변 근거를 원본 문서에서 명확히 제시</li>
+                            <li class="advdis-list-item"><span class="advdis-list-item-icon pros-item-icon">📚</span>개인/팀 지식 베이스 구축에 매우 효과적</li>
+                            <li class="advdis-list-item"><span class="advdis-list-item-icon pros-item-icon">🔒</span>소스 데이터 모델 학습 미사용 원칙 (경로별 확인)</li>
+                        </ul>
+                    </div>
+                    <div class="advdis-card cons-box">
+                        <h3 class="advdis-title cons-title"><span class="advdis-title-icon">🤔</span>사용 시 고려사항</h3>
+                        <ul class="advdis-list">
+                            <li class="advdis-list-item"><span class="advdis-list-item-icon cons-item-icon">⚠️</span>기능 및 사용량은 플랜에 따라 크게 다름</li>
+                            <li class="advdis-list-item"><span class="advdis-list-item-icon cons-item-icon">📂</span>업로드 파일 형식/용량 제한 확인 필요</li>
+                            <li class="advdis-list-item"><span class="advdis-list-item-icon cons-item-icon">📉</span>복잡한 표/이미지/저품질 PDF 인식 한계</li>
+                            <li class="advdis-list-item"><span class="advdis-list-item-icon cons-item-icon">⚙️</span>효과적 활용 위해 적절한 소스 선택/구성 중요</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 비교표 -->
+        <div class="slide" id="comparison-slide">
+            <div class="slide-header">
+                <div>
+                    <div class="slide-title">AI 지원군 한눈에 비교</div>
+                    <div class="slide-subtitle">건설 업무 활용을 위한 핵심 특징 요약</div>
+                </div>
+                <div class="slide-number">AI 도구 13</div>
+            </div>
+            <div class="slide-content">
+                <div class="comparison-table-container">
+                    <table class="comparison-table">
+                        <thead>
+                            <tr>
+                                <th>AI 지원군</th>
+                                <th>주요 특징 및 강점</th>
+                                <th>건설 사무 업무 핵심 활용 분야</th>
+                                <th>무료 플랜 주요 기능</th>
+                                <th>유료 플랜 핵심 혜택 (월 기준)</th>
+                                <th>정보 최신성/출처</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="highlight">ChatGPT</span><br><a href="https://chat.openai.com/" target="_blank" class="tool-link" style="font-size:0.85em; margin-left:0;">사이트 방문</a></td>
+                                <td>뛰어난 글쓰기, 높은 범용성, 방대한 지식, 플러그인/GPTs 생태계</td>
+                                <td>문서 초안 작성 (보고서, 이메일 등), 아이디어 발상, 정보 요약, 간단한 코드</td>
+                                <td>GPT-3.5 기반 기본 대화/글쓰기</td>
+                                <td><strong>Plus($20):</strong> GPT-4/4o, 이미지 생성, 웹 브라우징, 데이터 분석<br><strong>Team($25~30/사용자):</strong> 협업 기능</td>
+                                <td>유료(웹 브라우징)</td>
+                            </tr>
+                            <tr>
+                                <td><span class="highlight">Claude</span><br><a href="https://claude.ai/" target="_blank" class="tool-link" style="font-size:0.85em; margin-left:0;">사이트 방문</a></td>
+                                <td><span class="highlight">매우 긴 문서/파일 처리 탁월</span>, 섬세/논리적 글쓰기, 안전성, 프라이버시 보호</td>
+                                <td><span class="highlight">대용량 계약서/법규/기술 문서 분석 및 요약</span>, 보고서 품질 향상, 회의록 정리</td>
+                                <td>기본 모델 대화/글쓰기, 파일 분석(제한적)</td>
+                                <td><strong>Pro($20):</strong> 사용량 5배, 고급 모델, Projects 기능<br><strong>Team($25~30/사용자):</strong> 협업, 사용량 증가</td>
+                                <td>낮음 (자체 학습)</td>
+                            </tr>
+                            <tr>
+                                <td><span class="highlight">Gemini</span><br><a href="https://gemini.google.com/" target="_blank" class="tool-link" style="font-size:0.85em; margin-left:0;">사이트 방문</a></td>
+                                <td><span class="highlight">구글 검색 기반 최신 정보 접근</span>, 뛰어난 멀티모달, Google Workspace 통합</td>
+                                <td>최신 기술/법규 검색, <span class="highlight">구글 드라이브 자료 연동 분석(유료)</span>, 현장 사진/영상 분석</td>
+                                <td>기본 모델 대화, 일부 구글 앱 연동</td>
+                                <td><strong>Advanced($19.99):</strong> 최신 Pro 모델, Workspace 통합, 2TB<br><strong>비즈니스($20~30/사용자):</strong> 기업용</td>
+                                <td>매우 높음 (웹)</td>
+                            </tr>
+                            <tr>
+                                <td><span class="highlight">Genspark</span><br><a href="https://www.genspark.com/" target="_blank" class="tool-link" style="font-size:0.85em; margin-left:0;">사이트 방문</a></td>
+                                <td><span class="highlight">AI 에이전트 기반 심층 리서치 및 Sparkpage(보고서) 자동 생성</span>, 아이디어 시각화, PPT 지원</td>
+                                <td>신규 공법/자재 시장 동향 심층 분석/보고서, 프로젝트 아이디어 구체화, 발표 자료 초안</td>
+                                <td>일 200 크레딧, 기본 검색/Sparkpage</td>
+                                <td><strong>Plus($24.99):</strong> 사용량 5배, 고급 모델, 고급 멀티미디어</td>
+                                <td>높음 (웹)</td>
+                            </tr>
+                            <tr>
+                                <td><span class="highlight">Perplexity</span><br><a href="https://www.perplexity.ai/" target="_blank" class="tool-link" style="font-size:0.85em; margin-left:0;">사이트 방문</a></td>
+                                <td><span class="highlight">답변 출처 명확히 제공(Citations)</span>, 실시간 웹 검색, 정보 신뢰성 검증 특화</td>
+                                <td><span class="highlight">건설 법규/시방서/판례 등 정확한 정보 검색 및 출처 확인</span>, 정보 교차 검증</td>
+                                <td>기본 검색, Pro 검색(일 5회)</td>
+                                <td><strong>Pro($20):</strong> Pro 검색 600회+, 다양한 고급 모델 선택, 파일 업로드</td>
+                                <td>매우 높음 (웹)</td>
+                            </tr>
+                            <tr>
+                                <td><span class="highlight">NotebookLM</span><br><a href="https://notebooklm.google.com/" target="_blank" class="tool-link" style="font-size:0.85em; margin-left:0;">사이트 방문</a></td>
+                                <td><span class="highlight">사용자 업로드 내부 자료 기반 맞춤형 질의응답</span>, 개인/팀 지식 베이스 구축. (지속적인 기능 개선 중)</td>
+                                <td><span class="highlight">내부 기술 보고서/설계도면/계약서 분석 및 정보 추출</span>, 과거 프로젝트 자료 검색</td>
+                                <td>소스 업로드(노트북 100개, 각 소스 50개) 기반 질의응답/요약</td>
+                                <td><strong>Plus (Workspace/One AI Premium/Cloud 통해 제공):</strong> 사용량 5배+, 프리미엄 기능(공유,분석 등)</td>
+                                <td>내부 자료 기반</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="note-box" style="text-align: center;">
+                    <div class="note-title" style="justify-content: center;"><span class="note-title-icon">💡</span>선택은 상황에 맞게!</div>
+                    <p>
+                    각 AI 지원군은 저마다의 강력한 능력을 가지고 있습니다. <br>
+                    여러분의 건설 업무 상황과 필요에 가장 잘 맞는 도구를 선택하거나, <br>
+                    여러 도구를 조합하여 사용하는 것이 업무 효율을 극대화하는 비결입니다.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            Copyright © 2025 OROT. All rights reserved. 건설업 AI 활용 교육 시리즈.
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const slides = document.querySelectorAll('.slide');
+            const progressBar = document.getElementById('progressBar');
+            
+            if (slides.length > 0) {
+                slides[0].classList.add('active');
+            }
+            
+            window.addEventListener('scroll', function() {
+                const scrollPosition = window.scrollY;
+                const windowHeight = window.innerHeight;
+                const totalHeight = document.body.scrollHeight - windowHeight;
+                const scrollPercentage = totalHeight > 0 ? (scrollPosition / totalHeight) * 100 : 0;
+                progressBar.style.width = scrollPercentage + '%';
+                
+                slides.forEach((slide) => {
+                    const slideTop = slide.offsetTop;
+                    const slideHeight = slide.offsetHeight;
+                    
+                    if (scrollPosition > slideTop - windowHeight * (2/3) && 
+                        scrollPosition < slideTop + slideHeight - windowHeight / 4) {
+                        slide.classList.add('active');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
